@@ -12,10 +12,10 @@ client = InferenceClient(
     token="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",  # Replace with your actual token
 )
 
-# Asynchronous function to handle streaming
-async def generate_response_async(user_message, response_queue):
+# Function to handle streaming in a separate thread
+def generate_response(user_message, response_queue):
     response = ""
-    async for message in client.chat_completion(
+    for message in client.chat_completion(
         messages=[{"role": "user", "content": user_message}],
         max_tokens=5000,
         stream=True  # Use streaming
@@ -40,10 +40,10 @@ def chat():
         
         # Use a list as a thread-safe queue to collect the response
         response_queue = []
-        # Run asynchronous response generation
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        loop.run_until_complete(generate_response_async(user_message, response_queue))
+        # Run response generation in a separate thread to avoid blocking
+        thread = threading.Thread(target=generate_response, args=(user_message, response_queue))
+        thread.start()
+        thread.join()  # Wait for the thread to complete
         
         response = response_queue[0] if response_queue else "No response received"
 
@@ -58,4 +58,4 @@ def chat():
         return jsonify({'error': 'An error occurred while processing your request.'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)  # Directly use port 5000
+    app.run(host='0.0.0.0', port=5000, debug=False)  # Disable reloader for production
