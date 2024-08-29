@@ -3,96 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.80, user-scalable=no">
-	
-    <title>B12 Boost: Your Wellness AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-	
+    <title>B12 Boost: Advanced Wellness AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #6200ea;
-            --secondary-color: #00e676;
-            --tertiary-color: #ff4081;
-            --bg-color: #0a0e17;
+            --secondary-color: #00e5ff;
+            --tertiary-color: #76ff03;
+            --bg-color: #0a0a0a;
             --text-color: #ffffff;
             --chat-bg: rgba(255, 255, 255, 0.05);
+            --user-msg-bg: rgba(98, 0, 234, 0.2);
+            --bot-msg-bg: rgba(0, 229, 255, 0.1);
         }
         body, html {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             height: 100%;
-            background-color: var(--bg-color);
+            background: var(--bg-color);
             color: var(--text-color);
-            overflow: hidden;
-        }
-        #vanda-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-            backdrop-filter: blur(10px);
-        }
-        .header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .logo {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            border-radius: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: bold;
-            font-size: 24px;
-            color: var(--text-color);
-            margin-right: 15px;
-            box-shadow: 0 4px 20px rgba(98, 0, 234, 0.3);
-            animation: rotateLogo 10s linear infinite;
+            overflow: hidden;
         }
-        @keyframes rotateLogo {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .container {
+            width: 95%;
+            max-width: 1400px;
+            height: 95vh;
+            background: linear-gradient(135deg, rgba(98, 0, 234, 0.1), rgba(0, 229, 255, 0.1));
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .title {
-            font-size: 32px;
-            font-weight: 600;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--tertiary-color));
-            background-clip: text;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: gradientText 5s ease infinite;
-            background-size: 200% 200%;
+            color: var(--primary-color);
         }
-        @keyframes gradientText {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
         }
         #chat {
             flex: 1;
             overflow-y: auto;
-            border-radius: 20px;
             padding: 20px;
-            background: var(--chat-bg);
-            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
             gap: 15px;
-            box-shadow: inset 0 0 20px rgba(98, 0, 234, 0.2);
         }
         .message {
             max-width: 80%;
@@ -101,8 +80,8 @@
             line-height: 1.5;
             font-size: 16px;
             word-wrap: break-word;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -110,133 +89,247 @@
         }
         .message.user {
             align-self: flex-end;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-            color: var(--text-color);
+            background: var(--user-msg-bg);
+            border-bottom-right-radius: 0;
         }
         .message.bot {
             align-self: flex-start;
-            background: linear-gradient(45deg, var(--secondary-color), var(--tertiary-color));
-            color: var(--bg-color);
+            background: var(--bot-msg-bg);
+            border-bottom-left-radius: 0;
+        }
+        .input-area {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .specialized-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .specialized-button {
+            flex: 1 1 calc(25% - 7.5px);
+            padding: 10px 15px;
+            border: 2px solid black;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .specialized-button:hover {
+            background: rgba(224, 217, 217, 0.321);
+            transform: translateY(-2px);
         }
         #user-input-container {
             display: flex;
-            gap: 15px;
+            
         }
         #user-input {
             flex: 1;
-            padding: 15px 20px;
-            border-radius: 25px;
-            border: none;
+            padding: 12px 20px;
+            border-radius: 25px 0 0 25px;
+            border: 2px solid rgba(0, 0, 0, 0.329);
             outline: none;
             font-size: 16px;
             background: rgba(255, 255, 255, 0.1);
             color: var(--text-color);
-            transition: all 0.3s ease;
-        }
-        #user-input:focus {
-            box-shadow: 0 0 0 2px var(--secondary-color);
         }
         #user-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgb(0, 0, 0);
         }
         #send-button {
-            padding: 15px 30px;
+            padding: 12px 25px;
             border: none;
-            border-radius: 25px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 0 25px 25px 0;
+            background: var(--primary-color);
             color: var(--text-color);
             cursor: pointer;
             font-size: 16px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(98, 0, 234, 0.3);
+            transition: background-color 0.3s ease;
         }
         #send-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(98, 0, 234, 0.4);
+            background-color: #7c4dff;
+        }
+        #send-button:disabled {
+            background-color: #4a148c;
+            cursor: not-allowed;
         }
         .typing-indicator {
-            font-style: italic;
-            color: rgba(255, 255, 255, 0.7);
-            margin: 10px 0;
+            align-self: flex-start;
+            background: var(--bot-msg-bg);
+            border-radius: 18px;
+            padding: 12px 18px;
             font-size: 14px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
         }
         #chat::-webkit-scrollbar {
             width: 8px;
         }
         #chat::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
         }
         #chat::-webkit-scrollbar-thumb {
-            background-color: var(--primary-color);
-            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
         }
-        @media (max-width: 600px) {
+        .loading-dots::after {
+            content: '';
+            animation: loading 1s infinite;
+        }
+        @keyframes loading {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+        @media (max-width: 768px) {
             .container {
-                padding: 10px;
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
             }
-            .title {
-                font-size: 24px;
+            .specialized-buttons {
+                flex-direction: flex;
             }
-            #send-button {
-                padding: 15px 20px;
+            .specialized-button {
+                flex: 1 1 auto;
             }
+        }
+        .light-theme {
+            --bg-color: #f9f9f9;
+            --text-color: #010101;
+            --chat-bg: rgba(93, 86, 86, 0.05);
+            --user-msg-bg: rgba(109, 5, 255, 0.1);
+            --bot-msg-bg: rgba(168, 220, 226, 0.779);
         }
     </style>
 </head>
 <body>
-    <div id="vanta-canvas"></div>
     <div class="container">
         <div class="header">
-            <div class="logo">B12</div>
-            <h1 class="title">B12 Boost: Your Wellness AI</h1>
+            <h1 class="title">B12 Boost: Advanced Wellness AI</h1>
+            <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
         </div>
         <div id="chat"></div>
-        <div id="user-input-container">
-            <input type="text" id="user-input" placeholder="Ask about Vitamin B12 and your wellness..." />
-            <button id="send-button">Send</button>
+        <div class="input-area">
+            <div class="specialized-buttons">
+                <button class="specialized-button" data-prompt="personalized">Personalized B12 Advice</button>
+                <button class="specialized-button" data-prompt="diet">Diet Recommendations</button>
+                <button class="specialized-button" data-prompt="supplement">Supplement Guidance</button>
+                <button class="specialized-button" data-prompt="symptom">Symptom Analysis</button>
+            </div>
+            <div id="user-input-container">
+                <input type="text" id="user-input" placeholder="Ask about Vitamin B12 and your wellness..." aria-label="Enter your message" />
+                <button id="send-button" aria-label="Send message">Send</button>
+            </div>
         </div>
     </div>
 
     <script>
-        VANTA.NET({
-            el: "#vanta-canvas",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            color: 0x6200ea,
-            backgroundColor: 0x0a0e17,
-            points: 10.00,
-            maxDistance: 20.00,
-            spacing: 17.00
-        })
+        const chat = document.getElementById('chat');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const specializedButtons = document.querySelectorAll('.specialized-button');
+        const themeToggle = document.querySelector('.theme-toggle');
 
-        const typingIndicator = 'B12 Boost is thinking...';
-        
-        document.getElementById('send-button').addEventListener('click', sendMessage);
-        document.getElementById('user-input').addEventListener('keypress', function(e) {
+        let isLightTheme = false;
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            isLightTheme = !isLightTheme;
+            themeToggle.textContent = isLightTheme ? '🌙' : '🌓';
+        });
+
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         });
 
-        async function sendMessage() {
-            const input = document.getElementById('user-input');
-            const message = input.value.trim();
+        specializedButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const prompt = button.getAttribute('data-prompt');
+                userInput.value = getSpecializedPrompt(prompt);
+                sendMessage();
+            });
+        });
 
+        function getSpecializedPrompt(type) {
+            switch(type) {
+                case 'personalized':
+                    return "Can you provide personalized B12 advice based on my age and lifestyle?";
+                case 'diet':
+                    return "What dietary changes can I make to increase my B12 intake?";
+                case 'supplement':
+                    return "Can you guide me on choosing the right B12 supplement?";
+                case 'symptom':
+                    return "I'm experiencing fatigue and tingling in my hands. Could this be related to B12 deficiency?";
+                default:
+                    return "";
+            }
+        }
+
+        function addMessage(role, content) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', role);
+            chat.appendChild(messageElement);
+            chat.scrollTop = chat.scrollHeight;
+
+            if (role === 'bot') {
+                typeMessage(messageElement, content);
+            } else {
+                messageElement.textContent = content;
+            }
+        }
+
+        function typeMessage(element, message) {
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < message.length) {
+                    element.textContent += message.charAt(i);
+                    i++;
+                    chat.scrollTop = chat.scrollHeight;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 20);
+        }
+
+        function addTypingIndicator() {
+            const indicator = document.createElement('div');
+            indicator.classList.add('typing-indicator');
+            indicator.textContent = 'B12 Boost is thinking';
+            indicator.innerHTML += '<span class="loading-dots"></span>';
+            chat.appendChild(indicator);
+            chat.scrollTop = chat.scrollHeight;
+            return indicator;
+        }
+
+        function removeTypingIndicator(indicator) {
+            chat.removeChild(indicator);
+        }
+
+        async function sendMessage() {
+            const message = userInput.value.trim();
             if (message === '') return;
 
             addMessage('user', message);
+            userInput.value = '';
+            sendButton.disabled = true;
 
-            const typingDiv = document.createElement('div');
-            typingDiv.classList.add('typing-indicator');
-            typingDiv.textContent = typingIndicator;
-            document.getElementById('chat').appendChild(typingDiv);
+            const typingIndicator = addTypingIndicator();
 
             try {
                 const response = await fetch('/chat', {
@@ -249,54 +342,31 @@
 
                 const data = await response.json();
 
+                removeTypingIndicator(typingIndicator);
+
                 if (response.ok) {
-                    document.querySelector('.typing-indicator').remove();
-                    typeOutResponse(data.reply);
+                    addMessage('bot', data.reply);
                 } else {
-                    document.querySelector('.typing-indicator').remove();
                     addMessage('bot', 'Sorry, I encountered an error. Please try again.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                document.querySelector('.typing-indicator').remove();
+                removeTypingIndicator(typingIndicator);
                 addMessage('bot', 'Sorry, I encountered an error. Please try again.');
+            } finally {
+                sendButton.disabled = false;
             }
-
-            input.value = '';
-        }
-
-        function addMessage(role, content) {
-            const chat = document.getElementById('chat');
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message', role);
-            messageElement.textContent = content;
-            chat.appendChild(messageElement);
-            chat.scrollTop = chat.scrollHeight;
-        }
-
-        function typeOutResponse(response) {
-            const chat = document.getElementById('chat');
-            const messageElement = document.createElement('div');
-            messageElement.classList.add('message', 'bot');
-            chat.appendChild(messageElement);
-
-            let i = 0;
-            function type() {
-                if (i < response.length) {
-                    messageElement.textContent += response.charAt(i);
-                    i++;
-                    setTimeout(type, 20);
-                    chat.scrollTop = chat.scrollHeight;
-                }
-            }
-            type();
         }
 
         // Initial greeting
         setTimeout(() => {
-            typeOutResponse("Welcome to B12 Boost, your personal Vitamin B12 and wellness AI assistant! I'm here to help you optimize your health and understand the crucial role of B12. How can I assist you today?");
+            addMessage('bot', "Welcome to B12 Boost, your advanced personal Vitamin B12 and wellness AI assistant! I'm here to provide personalized advice, diet recommendations, supplement guidance, and symptom analysis. How can I assist you today?");
         }, 500);
+
+      
+
+        // Call this function after each new message
+        window.addEventListener('beforeunload', saveChatHistory);
     </script>
-	
 </body>
 </html>
