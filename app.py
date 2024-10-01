@@ -73,7 +73,7 @@ def chat():
 
     # Check if the user's question is relevant to Vitamin B12
     if not is_relevant_to_b12(user_message):
-        return jsonify({'reply': 'Please ask questions related to Vitamin B12 or topics associated with it.'})
+        return jsonify({'reply': 'Please ask questions related to EXOPLANETS or topics associated with it.'})
     
     try:
         start_time = time.time()
