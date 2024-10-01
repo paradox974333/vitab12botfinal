@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.80, user-scalable=no">
-    <title>B12 Boost: Advanced Wellness AI</title>
+    <title>Exoplanet Explorer: Advanced Astronomy AI</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6200ea;
-            --secondary-color: #00e5ff;
-            --tertiary-color: #76ff03;
+            --primary-color: #4a0e4e;
+            --secondary-color: #ff6b6b;
+            --tertiary-color: #feca57;
             --bg-color: #0a0a0a;
             --text-color: #ffffff;
             --chat-bg: rgba(255, 255, 255, 0.05);
-            --user-msg-bg: rgba(98, 0, 234, 0.2);
-            --bot-msg-bg: rgba(0, 229, 255, 0.1);
+            --user-msg-bg: rgba(74, 14, 78, 0.2);
+            --bot-msg-bg: rgba(255, 107, 107, 0.1);
         }
         body, html {
             font-family: 'Roboto', sans-serif;
@@ -32,7 +32,7 @@
             width: 95%;
             max-width: 1400px;
             height: 95vh;
-            background: linear-gradient(135deg, rgba(98, 0, 234, 0.1), rgba(0, 229, 255, 0.1));
+            background: linear-gradient(135deg, rgba(74, 14, 78, 0.1), rgba(255, 107, 107, 0.1));
             border-radius: 20px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             display: flex;
@@ -128,7 +128,6 @@
         }
         #user-input-container {
             display: flex;
-            
         }
         #user-input {
             flex: 1;
@@ -155,10 +154,10 @@
             transition: background-color 0.3s ease;
         }
         #send-button:hover {
-            background-color: #7c4dff;
+            background-color: #6a1b70;
         }
         #send-button:disabled {
-            background-color: #4a148c;
+            background-color: #2c0a2e;
             cursor: not-allowed;
         }
         .typing-indicator {
@@ -210,27 +209,27 @@
             --bg-color: #f9f9f9;
             --text-color: #010101;
             --chat-bg: rgba(93, 86, 86, 0.05);
-            --user-msg-bg: rgba(109, 5, 255, 0.1);
-            --bot-msg-bg: rgba(168, 220, 226, 0.779);
+            --user-msg-bg: rgba(74, 14, 78, 0.1);
+            --bot-msg-bg: rgba(255, 107, 107, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">B12 Boost: Advanced Wellness AI</h1>
+            <h1 class="title">Exoplanet Explorer: Advanced Astronomy AI</h1>
             <button class="theme-toggle" aria-label="Toggle theme">🌓</button>
         </div>
         <div id="chat"></div>
         <div class="input-area">
             <div class="specialized-buttons">
-                <button class="specialized-button" data-prompt="personalized">Personalized B12 Advice</button>
-                <button class="specialized-button" data-prompt="diet">Diet Recommendations</button>
-                <button class="specialized-button" data-prompt="supplement">Supplement Guidance</button>
-                <button class="specialized-button" data-prompt="symptom">Symptom Analysis</button>
+                <button class="specialized-button" data-prompt="discovery">Exoplanet Discovery</button>
+                <button class="specialized-button" data-prompt="types">Types of Exoplanets</button>
+                <button class="specialized-button" data-prompt="habitable">Habitable Exoplanets</button>
+                <button class="specialized-button" data-prompt="detection">Detection Methods</button>
             </div>
             <div id="user-input-container">
-                <input type="text" id="user-input" placeholder="Ask about Vitamin B12 and your wellness..." aria-label="Enter your message" />
+                <input type="text" id="user-input" placeholder="Ask about exoplanets and astronomy..." aria-label="Enter your message" />
                 <button id="send-button" aria-label="Send message">Send</button>
             </div>
         </div>
@@ -268,14 +267,14 @@
 
         function getSpecializedPrompt(type) {
             switch(type) {
-                case 'personalized':
-                    return "Can you provide personalized B12 advice based on my age and lifestyle?";
-                case 'diet':
-                    return "What dietary changes can I make to increase my B12 intake?";
-                case 'supplement':
-                    return "Can you guide me on choosing the right B12 supplement?";
-                case 'symptom':
-                    return "what are the symptoms of vitamin b12 deficiency?";
+                case 'discovery':
+                    return "Can you tell me about the history of exoplanet discoveries?";
+                case 'types':
+                    return "What are the different types of exoplanets we've discovered so far?";
+                case 'habitable':
+                    return "What makes an exoplanet potentially habitable?";
+                case 'detection':
+                    return "What methods do astronomers use to detect exoplanets?";
                 default:
                     return "";
             }
@@ -310,7 +309,7 @@
         function addTypingIndicator() {
             const indicator = document.createElement('div');
             indicator.classList.add('typing-indicator');
-            indicator.textContent = 'B12 Boost is thinking';
+            indicator.textContent = 'Exoplanet Explorer is thinking';
             indicator.innerHTML += '<span class="loading-dots"></span>';
             chat.appendChild(indicator);
             chat.scrollTop = chat.scrollHeight;
@@ -360,10 +359,8 @@
 
         // Initial greeting
         setTimeout(() => {
-            addMessage('bot', "Welcome to B12 Boost, your advanced personal Vitamin B12 and wellness AI assistant! I'm here to provide personalized advice, diet recommendations, supplement guidance, and symptom analysis. How can I assist you today?");
+            addMessage('bot', "Welcome to Exoplanet Explorer, your advanced astronomy AI assistant! I'm here to provide information about exoplanet discoveries, types of exoplanets, potentially habitable worlds, and detection methods. How can I assist you in your cosmic exploration today?");
         }, 500);
-
-      
 
         // Call this function after each new message
         window.addEventListener('beforeunload', saveChatHistory);
