@@ -3,7 +3,7 @@ from huggingface_hub import InferenceClient
 import threading
 import time
 
-app = Flask(_name_)
+app = Flask(__name__)
 
 # Initialize the InferenceClient with your model and token directly
 client = InferenceClient(
@@ -98,5 +98,5 @@ def chat():
         print(f"Error in chat endpoint: {e}")
         return jsonify({'error': 'An error occurred while processing your request.'}), 500
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=False)  # Disable reloader for production
