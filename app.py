@@ -1,9 +1,11 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import CORS
 from huggingface_hub import InferenceClient
 import threading
 import time
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS to allow access from other domains
 
 # Initialize the InferenceClient with your model and token directly
 client = InferenceClient(
@@ -11,35 +13,35 @@ client = InferenceClient(
     token="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",  # Replace with your actual token
 )
 
-# Comprehensive list of keywords related to Vitamin B12
+# Comprehensive list of keywords related to exoplanets
 KEYWORDS = [
-   "name", "vitamin","vitamin b12", "b12", "cobalamin", "deficiency", "supplement", "health",
-    "nutrition", "absorption", "anemia", "nervous system", "metabolism",
-    "diet", "vegan", "vegetarian", "megaloblastic", "neuropathy",
-    "cyanocobalamin", "methylcobalamin", "hydroxocobalamin", "adenosylcobalamin",
-    "energy", "red blood cells", "fatigue", "nervous tissue", "homocysteine",
-    "injection", "tablets", "oral", "digestive system", "gastric bypass",
-    "pernicious anemia", "intrinsic factor", "gastritis", "malabsorption",
-    "folate", "B vitamins", "macrocytic anemia", "myelin", "nerve damage",
-    "neurotransmitters", "DNA synthesis", "cell division", "immune system",
-    "elderly", "pregnancy", "children", "breastfeeding", "fortified foods"
+    "exoplanet", "planet", "extrasolar", "habitable zone", "atmosphere",
+    "temperature", "orbit", "star", "solar system", "Kepler",
+    "TESS", "discovery", "life", "alien", "biosignature",
+    "radiation", "gravity", "moons", "stellar", "transit",
+    "exoplanetary", "research", "astronomy", "astrobiology",
+    "spectroscopy", "galaxy", "light year", "detection",
+    "photometry", "system", "mass", "size", "composition",
+    "carbon", "water", "hydrogen", "exomoon", "interstellar",
+    "NASA", "ESA", "space", "Hubble", "James Webb",
+    "life forms", "solar", "universe", "astrochemistry"
 ]
 
-def is_relevant_to_b12(text):
+def is_relevant_to_exoplanets(text):
     """
-    Checks if the text contains any of the keywords related to Vitamin B12.
+    Checks if the text contains any of the keywords related to exoplanets.
     """
     text_lower = text.lower()
     return any(keyword in text_lower for keyword in KEYWORDS)
 
 def generate_response(user_message, response_queue):
     """
-    Generates a response using the model and checks if the response is relevant to Vitamin B12.
+    Generates a response using the model and checks if the response is relevant to exoplanets.
     """
     try:
         response = ""
         # Modified prompt to guide the model
-        prompt = f"You are a knowledgeable assistant focused on Vitamin B12. Only answer questions related to Vitamin B12, its benefits, deficiency, sources, and related health topics. If the question is not related to these topics, politely ask the user to ask something else. Question: {user_message}"
+        prompt = f"You are a knowledgeable assistant focused on exoplanets. Only answer questions related to exoplanets, their characteristics, discovery, and related astronomical topics. Question: {user_message}"
         
         for message in client.chat_completion(
             messages=[{"role": "user", "content": prompt}],
@@ -49,18 +51,14 @@ def generate_response(user_message, response_queue):
             if 'choices' in message and message['choices']:
                 response += message['choices'][0]['delta']['content']
         
-        # Check if the response is relevant to Vitamin B12
-        if not is_relevant_to_b12(response):
-            response = "The response generated was not relevant to Vitamin B12. Please ask questions related to Vitamin B12 or topics associated with it."
+        # Check if the response is relevant to exoplanets
+        if not is_relevant_to_exoplanets(response):
+            response = "The response generated was not relevant to exoplanets. Please ask questions related to exoplanets or topics associated with them."
 
         response_queue.append(response)
     except Exception as e:
         print(f"Error in generate_response: {e}")
         response_queue.append("An error occurred while generating the response.")
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -72,9 +70,9 @@ def chat():
     if not user_message:
         return jsonify({'error': 'No message provided.'}), 400
 
-    # Check if the user's question is relevant to Vitamin B12
-    if not is_relevant_to_b12(user_message):
-        return jsonify({'reply': 'Please ask questions related to Vitamin B12 or topics associated with it.'})
+    # Check if the user's question is relevant to exoplanets
+    if not is_relevant_to_exoplanets(user_message):
+        return jsonify({'reply': 'Please ask questions related to exoplanets or topics associated with them.'})
     
     try:
         start_time = time.time()
@@ -99,4 +97,4 @@ def chat():
         return jsonify({'error': 'An error occurred while processing your request.'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)  # Disable reloader for production
+    app.run(host='0.0.0.0', port=5000)
