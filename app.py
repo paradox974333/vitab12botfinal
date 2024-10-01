@@ -3,9 +3,7 @@ from flask_cors import CORS  # Import CORS
 from huggingface_hub import InferenceClient
 import threading
 import time
-
 app = Flask(__name__)
-CORS(app)  # Enable CORS to allow access from other domains
 
 # Initialize the InferenceClient with your model and token directly
 client = InferenceClient(
@@ -41,7 +39,7 @@ def generate_response(user_message, response_queue):
     try:
         response = ""
         # Modified prompt to guide the model
-        prompt = f"You are a knowledgeable assistant focused on exoplanets. Only answer questions related to exoplanets, their characteristics, discovery, and related astronomical topics. Question: {user_message}"
+        prompt = f"You are a knowledgeable assistant focused on exoplanets. Only answer questions related to exoplanets, their characteristics, discovery, and related astronomical topics. If the question is not related to these topics, politely ask the user to ask something else. Question: {user_message}"
         
         for message in client.chat_completion(
             messages=[{"role": "user", "content": prompt}],
@@ -59,6 +57,10 @@ def generate_response(user_message, response_queue):
     except Exception as e:
         print(f"Error in generate_response: {e}")
         response_queue.append("An error occurred while generating the response.")
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -97,4 +99,4 @@ def chat():
         return jsonify({'error': 'An error occurred while processing your request.'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=False)  # Disable reloader for production
