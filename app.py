@@ -22,8 +22,25 @@ KEYWORDS = [
     "photometry", "system", "mass", "size", "composition",
     "carbon", "water", "hydrogen", "exomoon", "interstellar",
     "NASA", "ESA", "space", "Hubble", "James Webb",
-    "life forms", "solar", "universe", "astrochemistry"
+    "life forms", "solar", "universe", "astrochemistry",
+    "habitable exoplanets", "planetary systems", "exoplanet detection techniques", 
+    "radial velocity", "wobble method", "direct imaging", "microlensing",
+    "atmospheric composition", "biosignature gases", "proxima centauri b", 
+    "trappist-1", "exoplanet habitability", "goldilocks zone", 
+    "tidal locking", "red dwarfs", "super-Earth", "mini-Neptune",
+    "gas giant", "terrestrial planets", "rogue planets", 
+    "pulsar planets", "hot Jupiters", "supernova", "planet formation",
+    "stellar classification", "luminosity", "stellar radiation", 
+    "spectral lines", "infrared astronomy", "planetary migration",
+    "exoplanetary atmospheres", "orbital resonance", "protoplanetary disk",
+    "starshade", "adaptive optics", "multi-planet systems", 
+    "exoplanetary rings", "space telescopes", "planetary transit", 
+    "circumstellar habitable zone", "stellar flux", "spectral type",
+    "luminosity class", "planetary magnetic fields", "dark matter",
+    "dark energy", "interstellar space", "intergalactic space",
+    "gravitational waves", "cosmic microwave background", "exoatmosphere"
 ]
+
 def is_relevant_to_b12(text):
     """
     Checks if the text contains any of the keywords related to Vitamin B12.
