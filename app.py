@@ -13,32 +13,23 @@ client = InferenceClient(
 
 # Comprehensive list of keywords related to Vitamin B12
 KEYWORDS = [
-    "exoplanet", "planet", "extrasolar", "habitable zone", "atmosphere",
-    "temperature", "orbit", "star", "solar system", "Kepler",
-    "TESS", "discovery", "life", "alien", "biosignature",
-    "radiation", "gravity", "moons", "stellar", "transit",
-    "exoplanetary", "research", "astronomy", "astrobiology",
-    "spectroscopy", "galaxy", "light year", "detection",
-    "photometry", "system", "mass", "size", "composition",
-    "carbon", "water", "hydrogen", "exomoon", "interstellar",
-    "NASA", "ESA", "space", "Hubble", "James Webb",
-    "life forms", "solar", "universe", "astrochemistry",
-    "habitable exoplanets", "planetary systems", "exoplanet detection techniques", 
-    "radial velocity", "wobble method", "direct imaging", "microlensing",
-    "atmospheric composition", "biosignature gases", "proxima centauri b", 
-    "trappist-1", "exoplanet habitability", "goldilocks zone", 
-    "tidal locking", "red dwarfs", "super-Earth", "mini-Neptune",
-    "gas giant", "terrestrial planets", "rogue planets", 
-    "pulsar planets", "hot Jupiters", "supernova", "planet formation",
-    "stellar classification", "luminosity", "stellar radiation", 
-    "spectral lines", "infrared astronomy", "planetary migration",
-    "exoplanetary atmospheres", "orbital resonance", "protoplanetary disk",
-    "starshade", "adaptive optics", "multi-planet systems", 
-    "exoplanetary rings", "space telescopes", "planetary transit", 
-    "circumstellar habitable zone", "stellar flux", "spectral type",
-    "luminosity class", "planetary magnetic fields", "dark matter",
-    "dark energy", "interstellar space", "intergalactic space",
-    "gravitational waves", "cosmic microwave background", "exoatmosphere"
+    "vitamin b12", "cobalamin", "b12 deficiency", "anemia", "b12 foods",
+    "absorption", "methylcobalamin", "cyanocobalamin", "supplements", "intramuscular injection",
+    "dietary sources", "vegan diet", "vegetarian diet", "nervous system", "metabolism",
+    "energy levels", "fatigue", "red blood cells", "myelin", "homocysteine",
+    "dna synthesis", "brain health", "neuropathy", "b12 rich foods", "vitamin b complex",
+    "folate", "methylation", "b12 injection", "b12 shot", "pernicious anemia",
+    "b12 test", "b12 deficiency symptoms", "macrocytic anemia", "b12 overdose",
+    "b12 supplements for energy", "intrinsic factor", "b12 absorption issues",
+    "gastric bypass surgery", "b12 storage", "animal products", "fish", "meat",
+    "dairy", "eggs", "b12 for seniors", "b12 for vegans", "b12 and mood", "depression",
+    "memory loss", "immune function", "cellular health", "enzymatic function",
+    "b12 for athletes", "b12 deficiency diagnosis", "b12 and pregnancy", "b12 in infants",
+    "b12 and mental health", "macrocytosis", "neurological symptoms", "vegetarians and b12",
+    "b12 in fortified foods", "b12 in plant foods", "b12 storage in body",
+    "b12 for energy metabolism", "digestive health", "b12 and aging",
+    "b12 levels", "b12 toxicity", "b12 and cognitive function", "b12 deficiency in elderly",
+    "b12 and weight loss", "b12 injection benefits", "oral b12 supplements"
 ]
 
 def is_relevant_to_b12(text):
@@ -55,7 +46,7 @@ def generate_response(user_message, response_queue):
     try:
         response = ""
         # Modified prompt to guide the model
-        prompt = f"You are a knowledgeable assistant focused on Exoplanet. Only answer questions related to exoplanet,  If the question is not related to these topics, politely ask the user to ask something else. Question: {user_message}"
+        prompt = f"You are a knowledgeable assistant focused on Vitamin B12. Only answer questions related to Vitamin B12. If the question is not related to these topics, politely ask the user to ask something else. Question: {user_message}"
         
         for message in client.chat_completion(
             messages=[{"role": "user", "content": prompt}],
@@ -67,7 +58,7 @@ def generate_response(user_message, response_queue):
         
         # Check if the response is relevant to Vitamin B12
         if not is_relevant_to_b12(response):
-            response = "The response generated was not relevant to exoplanets. Please ask questions related to planets or topics associated with it."
+            response = "The response generated was not relevant to Vitamin B12. Please ask questions related to Vitamin B12 or topics associated with it."
 
         response_queue.append(response)
     except Exception as e:
@@ -90,7 +81,7 @@ def chat():
 
     # Check if the user's question is relevant to Vitamin B12
     if not is_relevant_to_b12(user_message):
-        return jsonify({'reply': 'Please ask questions related to EXOPLANETS or topics associated with it.'})
+        return jsonify({'reply': 'Please ask questions related to Vitamin B12 or topics associated with it.'})
     
     try:
         start_time = time.time()
